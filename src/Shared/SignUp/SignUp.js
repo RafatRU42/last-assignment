@@ -1,8 +1,39 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { authContext } from '../Context/Authprovider';
 
 const SignUp = () => {
+    const [signUpError,setSignUpError] = useState('')
+
+    const {createUser} = useContext(authContext)
+
+    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+
+    const onSubmit = data => {
+        console.log(data)
+        setSignUpError('')
+
+        createUser(data.email, data.password)
+        .then(result =>{
+            console.log(result)
+        })
+        .catch(error=>{
+            setSignUpError(error.message)
+        })
+    }
+
+
     return (
-        <div>
+
+
+
+       
+        
+        
+      
+
+
+      
 
             <div className="mx-auto my-5 justify-center w-full max-w-md p-4 rounded-md shadow sm:p-8 light:bg-gray-900 light:text-gray-100 lg:justify-center">
                 <h2 className="mb-3 text-3xl font-semibold text-center">Login to your account</h2>
@@ -23,24 +54,34 @@ const SignUp = () => {
                     <p className="px-3 dark:text-gray-400">OR</p>
                     <hr className="w-full dark:text-gray-400" />
                 </div>
-                <form novalidate="" action="" className="space-y-8 ng-untouched ng-pristine ng-valid">
+                <form novalidate="" action="" className="space-y-8 ng-untouched ng-pristine ng-valid" on onSubmit={handleSubmit(onSubmit)}> 
                     <div className="space-y-4">
                         <div className="space-y-2">
-                            <label for="email" className="block text-sm">Email address</label>
-                            <input type="email" name="email" id="email" placeholder="leroy@jenkins.com" className="w-full px-3 py-2 border rounded-md dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400" />
+                      
+                            <label for="email"  className="block text-sm">Email address</label>
+                            <input type="email" {...register("email")}  id="email" placeholder="Your Email" className="w-full px-3 py-2 border rounded-md dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400" />
+                            {errors.email && <p className='text-red-500'>{errors.email?.message}</p>}
+
                         </div>
                         <div className="space-y-2">
                             <div className="flex justify-between">
-                                <label for="password" className="text-sm">Password</label>
+                                <label for="password"  className="text-sm">Password</label>
                                 <a rel="noopener noreferrer" href="#" className="text-xs hover:underline dark:text-gray-400">Forgot password?</a>
                             </div>
-                            <input type="password" name="password" id="password" placeholder="*****" className="w-full px-3 py-2 border rounded-md dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400" />
+                            <input type="password"   {...register("password", { required: 'Password Must Be Set' })} id="password" placeholder="*****" className="w-full px-3 py-2 border rounded-md dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400" />
+                            {errors.password && <p className='text-red-500'>{errors.password?.message}</p>}
+
                         </div>
                     </div>
-                    <button type="button" className="w-full px-8 py-3 font-semibold rounded-md dark:bg-violet-400 dark:text-gray-900">Sign in</button>
+                    <input type="submit" value={'Sign Up'} className="btn w-full px-8 py-3 font-semibold hover:bg-violet-300 rounded-md dark:bg-violet-400 dark:text-gray-900" />
+                {signUpError && <p className='text-red-500'>{signUpError}</p>}
+
+
+
+                    {/* <input type="submit" value={'Sign Up'} className='btn btn-accent w-full  mt-5 mb-5' /> */}
                 </form>
             </div>
-        </div>
+           
             
         
     );
