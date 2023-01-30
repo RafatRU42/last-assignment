@@ -1,12 +1,13 @@
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
+import { Link } from 'react-router-dom';
 import { authContext } from '../Context/Authprovider';
 
-const SignUp = () => {
+const Login = () => {
     const [signUpError,setSignUpError] = useState('')
 
-    const {createUser} = useContext(authContext)
+    const {login} = useContext(authContext)
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
@@ -14,9 +15,9 @@ const SignUp = () => {
         console.log(data)
         setSignUpError('')
 
-        createUser(data.email, data.password)
+        login(data.email, data.password)
         .then(result =>{
-            toast.success('You Successfully Signed Up')
+            toast.success('You Successfully Log In')
             console.log(result)
         })
         .catch(error=>{
@@ -39,8 +40,8 @@ const SignUp = () => {
 
             <div className="mx-auto my-5 justify-center w-full max-w-md p-4 rounded-md shadow sm:p-8 light:bg-gray-900 light:text-gray-100 lg:justify-center">
                 <h2 className="mb-3 text-3xl font-semibold text-center">Login to your account</h2>
-                <p className="text-sm text-center dark:text-gray-400">Don't have account?
-                    <a href="#" rel="noopener noreferrer" className="focus:underline hover:underline">Sign up here</a>
+                <p className="text-sm text-center">Don't have account?
+                    <Link className='text-green-400 underline' to={'/signup'}> Sign up here</Link>
                 </p>
                 <div className="my-6 space-y-4">
                     <button aria-label="Login with Google" type="button" className="flex items-center justify-center w-full p-4 space-x-4 border rounded-md focus:ring-2 focus:ring-offset-1 dark:border-gray-400 focus:ring-violet-400">
@@ -75,7 +76,7 @@ const SignUp = () => {
 
                         </div>
                     </div>
-                    <input type="submit" value={'Sign Up'} className="btn w-full px-8 py-3 font-semibold hover:bg-violet-300 rounded-md dark:bg-violet-400 dark:text-gray-900" />
+                    <input type="submit" value={'Login'} className="btn w-full px-8 py-3 font-semibold hover:bg-violet-300 rounded-md dark:bg-violet-400 dark:text-gray-900" />
                 {signUpError && <p className='text-red-500'>{signUpError}</p>}
 
 
@@ -89,4 +90,4 @@ const SignUp = () => {
     );
 };
 
-export default SignUp;
+export default Login;
