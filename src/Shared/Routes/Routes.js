@@ -6,6 +6,7 @@ import Home from '../../Pages/Home/Home';
 import Login from '../Login/Login';
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
 import SignUp from '../SignUp/SignUp';
+import AddProducts from './AddProducts';
 
 const router = createBrowserRouter([
     {path:'/',element:<Main></Main>,children:[
@@ -15,7 +16,7 @@ const router = createBrowserRouter([
     ]},
 
     {path:'/dashboard', element:<DashboardLayout></DashboardLayout>, children:[
-        {path:'/dashboard/addProducts'}
+        {path:'/dashboard/addProducts',element:<AddProducts></AddProducts>}
     ]}
 ])
 
