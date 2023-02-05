@@ -7,17 +7,26 @@ import { authContext } from '../Context/Authprovider';
 const SignUp = () => {
     const [signUpError,setSignUpError] = useState('')
 
-    const {createUser} = useContext(authContext)
+    const {createUser,ProfileUpdate} = useContext(authContext)
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
     const onSubmit = data => {
+
+        const userInfo={
+            displayName:data.userName
+        }
+
         console.log(data)
         setSignUpError('')
 
         createUser(data.email, data.password)
         .then(result =>{
             toast.success('You Successfully Signed Up')
+
+            ProfileUpdate(userInfo)
+
+
             console.log(result)
         })
         .catch(error=>{
@@ -61,8 +70,15 @@ const SignUp = () => {
                     <div className="space-y-4">
                         <div className="space-y-2">
                       
+                            <label for="email"  className="block text-sm">Your Name</label>
+                            <input type="name" {...register("userName",{required:'You have to insert Your Name'})}  id="userName" placeholder="Your Name" className="w-full px-3 py-2 border rounded-md dark:border-gray-700 light:bg-gray-900 light:text-gray-100 focus:dark:border-violet-400" />
+                            {errors.name && <p className='text-red-500'>{errors.name?.message}</p>}
+
+                        </div>
+                        <div className="space-y-2">
+                      
                             <label for="email"  className="block text-sm">Email address</label>
-                            <input type="email" {...register("email")}  id="email" placeholder="Your Email" className="w-full px-3 py-2 border rounded-md dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400" />
+                            <input type="email" {...register("email")}  id="email" placeholder="Your Email" className="w-full px-3 py-2 border rounded-md dark:border-gray-700 light:bg-gray-900 light:text-gray-100 focus:dark:border-violet-400" />
                             {errors.email && <p className='text-red-500'>{errors.email?.message}</p>}
 
                         </div>
@@ -71,7 +87,7 @@ const SignUp = () => {
                                 <label for="password"  className="text-sm">Password</label>
                                 <a rel="noopener noreferrer" href="#" className="text-xs hover:underline dark:text-gray-400">Forgot password?</a>
                             </div>
-                            <input type="password"   {...register("password", { required: 'Password Must Be Set' })} id="password" placeholder="*****" className="w-full px-3 py-2 border rounded-md dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400" />
+                            <input type="password"   {...register("password", { required: 'Password Must Be Set' })} id="password" placeholder="*****" className="w-full px-3 py-2 border rounded-md dark:border-gray-700 light:bg-gray-900 light:text-gray-100 focus:dark:border-violet-400" />
                             {errors.password && <p className='text-red-500'>{errors.password?.message}</p>}
 
                         </div>
