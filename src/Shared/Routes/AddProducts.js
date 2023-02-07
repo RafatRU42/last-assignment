@@ -7,9 +7,30 @@ const AddProducts = () => {
     const { user } = useContext(authContext)
 
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const imgHostKey = process.env.REACT_APP_imgbb_key;
 
     const onSubmit = data => {
         console.log(data)
+
+
+        const image = data.image;
+        console.log('img', image[0])
+        const formData = new FormData();
+        formData.append('image',image)
+        const url = `https://api.imgbb.com/1/upload?key=${imgHostKey}`
+        
+        fetch(url,{
+            method:'POST',
+            body:formData
+        })
+        .then(res =>res.json())
+        .catch(err =>console.log('err',err))
+        .then(imgData=>{
+
+        })
+
+
+
 
         const userName = user.displayName;
         const userEmail = user.email;
