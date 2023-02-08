@@ -1,33 +1,50 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import { authContext } from '../Context/Authprovider';
+import parseDataUrl from "data-uri-to-buffer";
+import { parse } from 'postcss';
 
 const AddProducts = () => {
+
+    const [imageData, setImageData] = useState(String)
+
+
     const { user } = useContext(authContext)
 
     const { register, handleSubmit, formState: { errors } } = useForm();
     const imgHostKey = process.env.REACT_APP_imgbb_key;
+    
 
     const onSubmit = data => {
-        console.log(data)
 
-
-        const image = data.image;
-        console.log('img', image[0])
-        const formData = new FormData();
-        formData.append('image',image)
-        const url = `https://api.imgbb.com/1/upload?key=${imgHostKey}`
         
-        fetch(url,{
-            method:'POST',
-            body:formData
-        })
-        .then(res =>res.json())
-        .catch(err =>console.log('err',err))
-        .then(imgData=>{
 
-        })
+// If you give picture then the following route will be render =>
+
+if(data.image.length){
+    const image = data.image[0]
+    const formData = new FormData();
+    formData.append('image',image)
+    const url = `https://api.imgbb.com/1/upload?key=${imgHostKey}`
+    
+    fetch(url,{
+        method:'POST',
+        body:formData
+    })
+    .then(res =>res.json())
+    .catch(err =>console.log('err',err))
+    .then(imgData=>{
+        console.log('imgdata',imgData)
+        
+        if(imgData.success){
+            setImageData(imgData.data.url)
+        }
+    })
+}
+
+
+       
 
 
 
@@ -36,6 +53,8 @@ const AddProducts = () => {
         const userEmail = user.email;
         const productName = data.name;
         const category = data.category;
+        const image = imageData
+        console.log('new Image' , image)
         const price = data.price;
         const location = data.location;
         const condition = data.condition;
@@ -50,6 +69,7 @@ const AddProducts = () => {
             location,
             condition,
             number,
+            image,
         }
 
 
@@ -131,7 +151,7 @@ const AddProducts = () => {
                         </div>
                         <div>
                             <label for="image" className="block mb-2 text-sm">Product Image</label>
-                            <input type="file" {...register("image", { required: true })} placeholder="Please Insert Mobile Number" className="w-full px-3 py-2 border rounded-md dark:border-gray-700 light:bg-gray-900 light:text-gray-100" />
+                            <input type="file" {...register("image", { required: false })} placeholder="Please Insert Mobile Number" className="w-full px-3 py-2 border rounded-md dark:border-gray-700 light:bg-gray-900 light:text-gray-100" />
                         </div>
 
 
