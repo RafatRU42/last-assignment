@@ -5,12 +5,27 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Authprovider from './Shared/Context/Authprovider';
 
+
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider,
+ 
+} from 'react-query'
+
+const queryClient = new QueryClient()
+
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Authprovider>
-      <App />
-    </Authprovider>
+    <QueryClientProvider client = {queryClient}>
+      <Authprovider>
+        <App />
+      </Authprovider>
+    </QueryClientProvider>
   </React.StrictMode>
 );
 
