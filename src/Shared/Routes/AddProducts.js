@@ -2,12 +2,11 @@ import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import { authContext } from '../Context/Authprovider';
-import parseDataUrl from "data-uri-to-buffer";
-import { parse } from 'postcss';
+
 
 const AddProducts = () => {
 
-    const [imageData, setImageData] = useState(String)
+    const [imageData, setImageData] = useState(null)
 
 
     const { user } = useContext(authContext)
@@ -22,31 +21,6 @@ const AddProducts = () => {
 
 // If you give picture then the following route will be render =>
 
-if(data.image.length){
-    const image = data.image[0]
-    const formData = new FormData();
-    formData.append('image',image)
-    const url = `https://api.imgbb.com/1/upload?key=${imgHostKey}`
-    
-    fetch(url,{
-        method:'POST',
-        body:formData
-    })
-    .then(res =>res.json())
-    .catch(err =>console.log('err',err))
-    .then(imgData=>{
-        console.log('imgdata',imgData)
-        
-        if(imgData.success){
-            setImageData(imgData.data.url)
-        }
-    })
-}
-
-
-       
-
-
 
 
         const userName = user.displayName;
@@ -59,6 +33,7 @@ if(data.image.length){
         const location = data.location;
         const condition = data.condition;
         const number = data.mobileNumber;
+        const description = data.description;
 
         const productInformation = {
             userName,
@@ -70,6 +45,7 @@ if(data.image.length){
             condition,
             number,
             image,
+            description,
         }
 
 
@@ -82,17 +58,39 @@ if(data.image.length){
             body: JSON.stringify(productInformation)
         })
             .then(res => res.json())
-            .then(data => {
-                console.log('data', data)
-                if (data.acknowledged) {
+            .then(newData => {
+                console.log('data', newData)
+                if (newData.acknowledged) {
                     toast.success('You Successfully Added the Product !')
+
+                    if(data.image.length){
+                        const image = data.image[0]
+                        const formData = new FormData();
+                        formData.append('image',image)
+                        const url = `https://api.imgbb.com/1/upload?key=${imgHostKey}`
+                        
+                        fetch(url,{
+                            method:'POST',
+                            body:formData
+                        })
+                        .then(res =>res.json())
+                        .catch(err =>console.log('err',err))
+                        .then(imgData=>{
+                            console.log('imgdata',imgData)
+                            
+                            if(imgData.success){
+                                setImageData(imgData.data.url)
+                            }
+                        })
+                    }
                 }
                 else {
-                    toast.error(data.message)
+                    toast.error(newData.message)
                 }
             })
 
 
+            
 
     };
     return (
@@ -106,13 +104,7 @@ if(data.image.length){
                     <div className="space-y-4">
                         <div>
                             <label for="text" className="block mb-2 text-sm">Product Name</label>
-                            <select  {...register("name", { required: true })} className="w-full px-3 py-2 border rounded-md dark:border-gray-700 light:bg-gray-900 light:text-gray-100">
-                                <option disabled> Please Select A Product Name</option>
-                                <option>Samsung</option>
-                                <option>VIVO</option>
-                                <option>IPhone</option>
-
-                            </select>
+                            <input type="text" {...register("name", { required: true })} placeholder="Please Insert Product Name" className="w-full px-3 py-2 border rounded-md dark:border-gray-700 light:bg-gray-900 light:text-gray-100" />
                             {errors.name && <span className='text-red-400'>{errors.name?.message}</span>}
                         </div>
                         <div>
@@ -143,15 +135,26 @@ if(data.image.length){
                         </div>
                         <div>
                             <label for="text" className="block mb-2 text-sm">Product Condition</label>
-                            <input type="text" {...register("condition", { required: true })} placeholder="Please Insert Product Condition" className="w-full px-3 py-2 border rounded-md dark:border-gray-700 light:bg-gray-900 light:text-gray-100" />
+                            <select {...register("condition", { required: true })} className="w-full px-3 py-2 border rounded-md dark:border-gray-700 light:bg-gray-900 light:text-gray-100">
+                                <option disabled>Please Select A Condition</option>
+                                <option>Excellent</option>
+                                <option>Good</option>
+                                <option>Fair</option>
+                               
+                            </select>
                         </div>
+                    
                         <div>
                             <label for="number" className="block mb-2 text-sm">Mobile Number</label>
                             <input type="number" {...register("mobileNumber", { required: true })} placeholder="Please Insert Mobile Number" className="w-full px-3 py-2 border rounded-md dark:border-gray-700 light:bg-gray-900 light:text-gray-100" />
                         </div>
                         <div>
                             <label for="image" className="block mb-2 text-sm">Product Image</label>
-                            <input type="file" {...register("image", { required: false })} placeholder="Please Insert Mobile Number" className="w-full px-3 py-2 border rounded-md dark:border-gray-700 light:bg-gray-900 light:text-gray-100" />
+                            <input type="file" {...register("image", { required: true })} placeholder="Please Insert Mobile Number" className="w-full px-3 py-2 border rounded-md dark:border-gray-700 light:bg-gray-900 light:text-gray-100" />
+                        </div>
+                        <div>
+                            <label for="text" className="block mb-2 text-sm">Description</label>
+                            <textarea name="text" {...register("description", { required: true })} placeholder="Please Write Some Description" className="w-full px-10 py-5 border rounded-md dark:border-gray-700 light:bg-gray-900 light:text-gray-100" />
                         </div>
 
 
