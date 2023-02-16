@@ -6,7 +6,7 @@ import { authContext } from '../Context/Authprovider';
 
 const AddProducts = () => {
 
-    const [imageData, setImageData] = useState(null)
+    const [imageData, setImageData] = useState('')
 
 
     const { user } = useContext(authContext)
@@ -110,11 +110,12 @@ const AddProducts = () => {
                         <div>
                             <label for="text" className="block mb-2 text-sm">Product Category</label>
                             <select type="text" {...register("category", { required: true })} placeholder="Please Insert Product Category" className="w-full px-3 py-2 border rounded-md dark:border-gray-700 light:bg-gray-900 light:text-gray-100">
-                                <option>Mobile </option>
-                                <option>TV</option>
-                                <option>Electronics</option>
-                                <option>Bike</option>
-                                <option>Other</option>
+                                <option>Samsung</option>
+                                <option>VIVO</option>
+                                <option>iPhone</option>
+                                <option>Nokia</option>
+                                <option>Motorola</option>
+                               
                             </select>
                         </div>
                         <div>
