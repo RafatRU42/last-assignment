@@ -2,7 +2,7 @@ import React from 'react';
 import { useQuery } from 'react-query';
 
 const Vivo = () => {
-    const {data:VIVO =[],refetch} = useQuery({
+    const {data:VIVO =[],refetch,isLoading} = useQuery({
         queryKey:['VIVO'],
         queryFn: async () =>{
             const res = await fetch('http://localhost:5000/VIVO')
@@ -10,6 +10,15 @@ const Vivo = () => {
             return data1
         }
     })
+    if(isLoading){
+        return <div className='flex justify-center  items-center'>
+
+        <div
+            className="flex  w-16 h-16 border-4 border-dashed rounded-full animate-spin dark:border-violet-400">
+
+        </div>
+    </div>
+    }
     return (
         <div className='grid grid-cols-3 mr-2'>
         {

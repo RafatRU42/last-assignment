@@ -2,7 +2,9 @@ import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import DashboardLayout from '../../Dashboard/DashboardLayout/DashboardLayout';
 import Main from '../../Main/Main';
+import Blogs from '../../Pages/Blogs/Blogs';
 import BookingModal from '../../Pages/BookingModal/BookingModal';
+import Error from '../../Pages/Error/Error';
 
 import Home from '../../Pages/Home/Home';
 import Iphone from '../../Pages/Iphone/Iphone';
@@ -15,13 +17,15 @@ import SignUp from '../SignUp/SignUp';
 import AddProducts from './AddProducts';
 
 const router = createBrowserRouter([
-    {path:'/',element:<Main></Main>,children:[
+    {path:'/',errorElement:<Error></Error>, element:<Main></Main>,children:[
         {path:'/',element:<PrivateRoute><Home></Home></PrivateRoute>},
         {path:'/signup',element:<SignUp></SignUp>},
         {path:'/login',element:<Login></Login>},
+        {path:'/blogs',element:<Blogs></Blogs>},
+
     ]},
 
-    {path:'/dashboard', element:<DashboardLayout></DashboardLayout>, children:[
+    {path:'/dashboard', errorElement:<Error></Error>, element:<DashboardLayout></DashboardLayout>, children:[
         {path:'/dashboard/addProducts',element:<AddProducts></AddProducts>},
         {path:'/dashboard/myProducts',element:<MyProducts></MyProducts>},
         {path:'/dashboard/Samsung',element:<Samsung></Samsung>},

@@ -2,7 +2,7 @@ import React from 'react';
 import { useQuery } from 'react-query';
 
 const Iphone = () => {
-    const {data:iPhone = [], refatch} = useQuery({
+    const {data:iPhone = [], refatch,isLoading} = useQuery({
         queryKey:['iPhone'],
         queryFn: async () =>{
             const res = await fetch('http://localhost:5000/iPhone')
@@ -11,6 +11,15 @@ const Iphone = () => {
             
         }
     })
+    if(isLoading){
+        return <div className='flex justify-center  items-center'>
+
+        <div
+            className="flex  w-16 h-16 border-4 border-dashed rounded-full animate-spin dark:border-violet-400">
+
+        </div>
+    </div>
+    }
     return (
         <div className='grid grid-cols-3 mr-2'>
         {

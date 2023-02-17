@@ -60,7 +60,7 @@ const Navbar = () => {
 
         </button>
         <button className="btn btn-ghost btn-squire mx-4">
-          About
+          <Link to={'/blogs'}>Blogs</Link>
         </button>
         <button className="btn btn-ghost btn-squire mx-4">
           <Link to={'/dashboard'}>Dashboard</Link>

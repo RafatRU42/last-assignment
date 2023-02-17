@@ -1,5 +1,6 @@
 import React from 'react';
 import {  useQuery } from 'react-query';
+import NoProduct from '../NoProduct/NoProduct';
 
 const MyProducts = () => {
 
@@ -12,6 +13,10 @@ const MyProducts = () => {
         }
 
     })
+
+    if(myProducts.length ===0){
+        return <NoProduct></NoProduct>
+    }
     console.log(myProducts)
 
     return (
