@@ -31,7 +31,7 @@ const router = createBrowserRouter([
         {path:'/dashboard/Samsung',element:<Samsung></Samsung>},
         {path:'/dashboard/VIVO',element:<Vivo></Vivo>},
         {path:'/dashboard/iPhone',element:<Iphone></Iphone>},
-        {path:'/dashboard/bookingNow',element:<BookingModal></BookingModal>},
+        {path:'/dashboard/booking/:id',element:<BookingModal></BookingModal>,loader:({params})=>fetch(`http://localhost:5000/iPhone/${params.id}`)},
       
     ]}
 ])

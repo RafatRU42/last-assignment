@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {  useQuery } from 'react-query';
+import { authContext } from '../../Shared/Context/Authprovider';
 import NoProduct from '../NoProduct/NoProduct';
 
 const MyProducts = () => {
+    const {user} = useContext(authContext)
 
     const {data:myProducts = [], refetch } = useQuery({
-        queryKey:['myProducts'],
+        queryKey:['myProducts',user?.email],
         queryFn: async () =>{
-            const res = await fetch('http://localhost:5000/myProducts')
+            const res = await fetch(`http://localhost:5000/myProducts?email=${user?.email}`)
             const data = await res.json()
             return data;
         }
