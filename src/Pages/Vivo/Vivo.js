@@ -36,7 +36,22 @@ const Vivo = () => {
                         <div className="badge badge-outline">{products.condition}</div>
                         
                     </div>
-<button className="btn btn-success text-white">Book Now</button>
+                    <label className="btn btn-success text-white" htmlFor="my-modal">Book Now</label>
+                                <input type="checkbox" id="my-modal" className="modal-toggle" />
+                                <div className="modal">
+                                    <div className="modal-box">
+                                        <figure><img className='w-full' src={products.image} alt="product" /></figure>
+
+                                        <h3 className="font-bold text-lg">{products.productName}</h3>
+                                        <h3 className="font-bold text-lg"> Seller Name:  {products.userName}</h3>
+                                        <h3 className="font-bold text-lg"> Price:  ${products.price}</h3>
+                                        <h3 className="font-bold text-lg"> Mobile Number:  {products.number}</h3>
+                                        <p className="py-4">{products.description}</p>
+                                        <div className="modal-action">
+                                            <label htmlFor="my-modal" className="btn">Book</label>
+                                        </div>
+                                    </div>
+                                </div>
 
                 </div>
             </div>

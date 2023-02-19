@@ -1,9 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import { Link } from 'react-router-dom';
 import BookingModal from '../BookingModal/BookingModal';
 
 const Samsung = () => {
+
+    const [modalProduct, setModalProduct] = useState(null);
+
+    const handleBookNow = (productId) => {
+        fetch(`http://localhost:5000/Samsung/${productId}`)
+            .then((response) => response.json())
+            .then((data) => {
+                setModalProduct(data)
+                console.log('da', data)
+            });
+
+    };
 
     const { data: Samsung = [], refetch, isLoading } = useQuery({
         queryKey: ['Samsung'],
@@ -32,7 +44,7 @@ const Samsung = () => {
                 {
                     Samsung.map(products =>
                         <div className=" card bg-base-100 shadow-xl m-2">
-                            <figure><img src={products.image} alt="Shoes" /></figure>
+                            <figure><img src={products.image} alt="product" /></figure>
                             <div className="card-body">
                                 <h2 className="card-title">
                                     {products.productName}
@@ -44,20 +56,21 @@ const Samsung = () => {
                                     <div className="badge badge-outline">{products.condition}</div>
 
                                 </div>
-                                {/* <BookingModal></BookingModal> */}
-                                {/* <Link to={'/dashboard/bookingNow'}></Link> */}
-                                {/* <button className="btn btn-success text-white">Book Now</button> */}
 
-                                <label htmlFor="my-modal" className="btn btn-success text-white">Book Now</label>
+
+                                <label className="btn btn-success text-white" htmlFor="my-modal">Book Now</label>
                                 <input type="checkbox" id="my-modal" className="modal-toggle" />
                                 <div className="modal">
                                     <div className="modal-box">
-                                        <figure><img className='w-full' src={products.image} alt="Shoes" /></figure>
+                                        <figure><img className='w-full' src={products.image} alt="product" /></figure>
 
-                                        <h3 className="font-bold text-lg">{products.location}</h3>
+                                        <h3 className="font-bold text-lg">{products.productName}</h3>
+                                        <h3 className="font-bold text-lg"> Seller Name:  {products.userName}</h3>
+                                        <h3 className="font-bold text-lg"> Price:  ${products.price}</h3>
+                                        <h3 className="font-bold text-lg"> Mobile Number:  {products.number}</h3>
                                         <p className="py-4">{products.description}</p>
                                         <div className="modal-action">
-                                            <label htmlFor="my-modal" className="btn">Yay!</label>
+                                            <label htmlFor="my-modal" className="btn">Book</label>
                                         </div>
                                     </div>
                                 </div>
