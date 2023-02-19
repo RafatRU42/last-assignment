@@ -8,7 +8,7 @@ const Samsung = () => {
     const [modalProduct, setModalProduct] = useState(null);
 
     const handleBookNow = (productId) => {
-        fetch(`http://localhost:5000/Samsung/${productId}`)
+        fetch(`https://last-assignment-server3.vercel.app/Samsung/${productId}`)
             .then((response) => response.json())
             .then((data) => {
                 setModalProduct(data)
@@ -20,7 +20,7 @@ const Samsung = () => {
     const { data: Samsung = [], refetch, isLoading } = useQuery({
         queryKey: ['Samsung'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/Samsung')
+            const res = await fetch('https://last-assignment-server3.vercel.app/Samsung')
             const data1 = await res.json()
             return data1
         }

@@ -5,7 +5,7 @@ const Vivo = () => {
     const {data:VIVO =[],refetch,isLoading} = useQuery({
         queryKey:['VIVO'],
         queryFn: async () =>{
-            const res = await fetch('http://localhost:5000/VIVO')
+            const res = await fetch('https://last-assignment-server3.vercel.app/VIVO')
             const data1 = await res.json()
             return data1
         }

@@ -9,7 +9,7 @@ const MyProducts = () => {
     const {data:myProducts = [], refetch } = useQuery({
         queryKey:['myProducts',user?.email],
         queryFn: async () =>{
-            const res = await fetch(`http://localhost:5000/myProducts?email=${user?.email}`)
+            const res = await fetch(`https://last-assignment-server3.vercel.app/myProducts?email=${user?.email}`)
             const data = await res.json()
             return data;
         }

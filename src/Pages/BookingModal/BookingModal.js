@@ -8,7 +8,7 @@ const BookingModal = () => {
     // const {data:booking=[], refatch,isLoading} =useQuery({
     //     queryKey:['bookings'],
     //     queryFn: async ()=>{
-    //         const res = await fetch(`http://localhost:5000/iPhone?id=`)
+    //         const res = await fetch(`https://last-assignment-server3.vercel.app/iPhone?id=`)
     //     }
     // })
     const booking = useLoaderData()

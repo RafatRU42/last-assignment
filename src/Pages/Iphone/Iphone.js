@@ -6,7 +6,7 @@ const Iphone = () => {
     const { data: iPhone = [], refatch, isLoading } = useQuery({
         queryKey: ['iPhone'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/iPhone')
+            const res = await fetch('https://last-assignment-server3.vercel.app/iPhone')
             const data1 = await res.json()
             return data1
 
